@@ -1,17 +1,11 @@
-<?php header('Access-Control-Allow-Origin: *'); ?> //on autorise l'accès à cet affichage
 <?php
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=edt', 'root', ''); //connexion à la base de données
-}
-catch(Exception $e)
-{
-        die('Erreur : '.$e->getMessage()); //erreur si on n'arrive pas à se connecter
-}
+    try {                                                                       //on se connecte à la base de données
+        $bdd = new PDO('mysql:host=localhost;dbname=edt', 'root', '');          //PDO('mysql:host="nom_hôte";dbname="nom_database"', 'user', 'password');
+    } catch (Exception $e) {                                                   
+        die('Erreur');                                                         //si on n'arrive pas à se connecter message d'erreur
+    }
 
-$reponse = $bdd->query('SELECT * FROM matiere'); //preparation et exécution de la requête pour afficher toutes les matières
-
-$result = $reponse->fetchAll(PDO::FETCH_ASSOC); //on met tous les résultats dans $result à l'aide d'un curseur
-$reponse->closeCursor();                        //on ferme le curseur
-
-echo json_encode($result, JSON_PRETTY_PRINT);   //on retourne le résultat dans un tableau JSON
+    $req = $bdd->prepare('INSERT INTO matiere(id_mat, nom_mat) VALUES(?,?)');  //$req contient la requête 
+    $req->execute(array($_POST['id_mat'], $_POST['nom_mat']));		        //on exécute $req et on range dans les cases du tableau
+    header ("Refresh: 1.5;URL=index.php");			               //on est redirigé sur la page d'administration des matières au bout de 1.5 sec
+    echo 'Mati&egrave;re ajout&eacute;e avec succ&egrave;s !';                 //on affiche un message de réussite d'ajout
