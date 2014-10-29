@@ -7,5 +7,5 @@
 
     $req = $bdd->prepare('INSERT INTO matiere(id_mat, nom_mat) VALUES(?,?)');  //$req contient la requête 
     $req->execute(array($_POST['id_mat'], $_POST['nom_mat']));		        //on exécute $req et on range dans les cases du tableau
-    header ("Refresh: 1.5;URL=index.php");			               //on est redirigé sur la page d'administration des matières au bout de 1.5 sec
+    header ("Refresh: 1.5;URL=index.html");			               //on est redirigé sur la page d'administration des matières au bout de 1.5 sec
     echo 'Mati&egrave;re ajout&eacute;e avec succ&egrave;s !';                 //on affiche un message de réussite d'ajout
